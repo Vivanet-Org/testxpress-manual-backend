@@ -1,4 +1,6 @@
+com\siliconstack\service\TeProjectsService.class
 com\siliconstack\StreamLambdaHandler.class
+com\siliconstack\exception\ResourceNotFoundException.class
 com\siliconstack\repository\TEProjectRepository.class
 com\siliconstack\Application.class
 com\siliconstack\controller\ProjectController.class

@@ -80,25 +80,8 @@ $ curl -s https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping | python
     "pong": "Hello, World!"
 }
 ```
+```
+To run Sonar scan add sonar server url in <sonar.host.url> tag and use below maven command
+'mvn clean packgae -p sonar'
 
-
-mvn archetype:generate -DgroupId=com.siliconstack -DartifactId=tm-app -Dversion=0.0.1-SNAPSHOT \
-       -DarchetypeGroupId=com.amazonaws.serverless.archetypes \
-       -DarchetypeArtifactId=aws-serverless-springboot2-archetype \
-       -DarchetypeVersion=1.8
-	   
-	   
-	   db endpoint url: devops-rds.cpyuoqdddhci.ap-south-1.rds.amazonaws.com
-username: Devopsadmin
-Pswd: Devopsadmin
-port: 5432
-
-region for backend deployment:ap-south-1
-
-https://www.google.com/search?q=aws-serverless-java-container-spring+boot+2+example&rlz=1C1CHBF_enIN1006IN1006&oq=aws-serverless-java-container-spring+boot+2+&aqs=chrome.1.69i57j0i512l2j0i390.14040j0j4&sourceid=chrome&ie=UTF-8
-
-https://radualmasan.com/blog/spring-boot-with-serverless-on-aws
-
-https://blog.yugabyte.com/building-serverless-applications-using-spring-boot-aws-lambda-yugabytedb/
-
-https://github.com/huksley/serverless-java-spring-boot/tree/master/src/main/java/my/service
+```

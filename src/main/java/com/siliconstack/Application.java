@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.siliconstack.controller.PingController;
-
+import com.siliconstack.controller.ProjectController;
 
 @SpringBootApplication
 // We use direct @Import instead of @ComponentScan to speed up cold starts

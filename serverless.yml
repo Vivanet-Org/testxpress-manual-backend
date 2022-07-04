@@ -1,0 +1,48 @@
+service: tm-app   # Service name will be changed for different microservices
+
+provider:
+  name: aws
+  apiGateway: 
+    restApiId: zew9dv8n6g 
+    restApiRootResourceId: kqo43rok2m
+  runtime: java11
+  memorySize: 1512
+  timeout: 60
+  stage: ${opt:stage,"QA"}
+  region: ap-south-1 
+  stackName: tm-app-stack # Stack name will be changed for different microservices
+  profile: ${opt:profile, "default"}
+  endpointType: REGIONAL
+  role: arn:aws:iam::493213171340:role/Serverless_Role
+  deploymentBucket:
+    name: testxpress-manual-be-qa
+    maxPreviousDeploymentArtifacts: 10
+    blockPublicAccess: true
+    serverSideEncryption: AES256
+
+resources:
+  Description: Serverless Microservices
+package:
+  individually: true
+
+functions:
+  testxpressBE:
+    package: 
+      artifact: target/tm-app-0.0.1-SNAPSHOT-lambda-package.zip   # Artifact will be changed for different microservices
+    handler: com.siliconstack.StreamLambdaHandler::handleRequest
+    events:
+      - http:
+          path: /project/{proxy+}     # Path will be changed for different microservices
+          method: ANY
+          response:
+            headers:
+              Content-Type: "'application/json'"
+              Access-Control-Allow-Origin: "'*'"
+            statusCodes:
+              200:
+                pattern:''
+          cors:
+            enabled: true
+            origin: '*'
+            headers: 'Content-Type,X-PINGOTHER'
+            methods: 'GET,POST,PUT,DELETE,OPTIONS'

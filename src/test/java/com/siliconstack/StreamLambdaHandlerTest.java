@@ -33,6 +33,24 @@ public class StreamLambdaHandlerTest {
         lambdaContext = new MockLambdaContext();
     }
 
+
+    //@Test
+    public void getAllProjects_returnAllProjects() {
+        InputStream requestStream = new AwsProxyRequestBuilder("/getAllProjects", HttpMethod.GET)
+                                            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+                                            .buildStream();
+
+        ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
+        handle(requestStream, responseStream);
+        AwsProxyResponse response = readResponse(responseStream);
+        assertNotNull(response);
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCode());
+
+        assertTrue(response.getMultiValueHeaders().containsKey(HttpHeaders.CONTENT_TYPE));
+        assertTrue(response.getMultiValueHeaders().getFirst(HttpHeaders.CONTENT_TYPE).startsWith(MediaType.APPLICATION_JSON));
+
+    }
+
     @Test
     public void ping_streamRequest_respondsWithHello() {
         InputStream requestStream = new AwsProxyRequestBuilder("/ping", HttpMethod.GET)

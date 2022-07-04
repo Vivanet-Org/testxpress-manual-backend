@@ -43,6 +43,32 @@ public class TEProject {
     @CreationTimestamp
     private Date updatedOn;
 
+    public TEProject() {
+    }    
+
+    public TEProject(String projectName, String projectDescription, int createdBy, Date createdOn,
+            int updatedBy, Date updatedOn, boolean isDeleted) {
+        this.projectName = projectName;
+        this.projectDescription = projectDescription;
+        this.isDeleted = isDeleted;
+        this.createdBy = createdBy;
+        this.createdOn = createdOn;
+        this.updatedBy = updatedBy;
+        this.updatedOn = updatedOn;
+    }
+
+    public TEProject(int projectid, String projectName, String projectDescription, int createdBy,
+            Date createdOn, int updatedBy, Date updatedOn, boolean isDeleted) {
+        this.projectid = projectid;
+        this.projectName = projectName;
+        this.projectDescription = projectDescription;
+        this.isDeleted = isDeleted;
+        this.createdBy = createdBy;
+        this.createdOn = createdOn;
+        this.updatedBy = updatedBy;
+        this.updatedOn = updatedOn;
+    }
+
     public int getProjectid() {
         return projectid;
     }
