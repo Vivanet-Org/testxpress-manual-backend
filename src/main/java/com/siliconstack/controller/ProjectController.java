@@ -60,7 +60,7 @@ public class ProjectController {
     }
 
     @PutMapping("/updateProject/{id}")
-    public ResponseEntity<TEProject> updateProject(@PathVariable("id") int id, TEProjectDTO project) {
+    public ResponseEntity<TEProject> updateProject(@PathVariable("id") int id, @RequestBody TEProjectDTO project) {
         log.info("update existing project created");
         try {
             return new ResponseEntity<TEProject>(teProjectsService.updateProject(project, id), HttpStatus.OK);

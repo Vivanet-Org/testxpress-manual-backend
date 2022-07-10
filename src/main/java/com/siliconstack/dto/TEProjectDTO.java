@@ -4,80 +4,93 @@ import java.util.Date;
 
 public class TEProjectDTO {
 
-    private String projectName;
-    private String projectDescription;
-    private int createdBy;
-    private Date createdOn;
-    private int updatedBy;
-    private Date updatedOn;
-    private boolean isDeleted;
+	private int projectid;
+    private String projectname;
+    private String projectdescription;
+    private int createdby;
+    private Date createdon;
+    private int updatedby;
+    private Date updatedon;
+    private boolean isdeleted;
 
     public TEProjectDTO() {
     }
+    
+	public TEProjectDTO(int projectid, String projectname, String projectdescription, int createdby, Date createdon,
+			int updatedby, Date updatedon, boolean isdeleted) {
+		super();
+		this.projectid = projectid;
+		this.projectname = projectname;
+		this.projectdescription = projectdescription;
+		this.createdby = createdby;
+		this.createdon = createdon;
+		this.updatedby = updatedby;
+		this.updatedon = updatedon;
+		this.isdeleted = isdeleted;
+	}
 
-    public TEProjectDTO(String projectName, String projectDescription, int createdBy, Date createdOn, int updatedBy, Date updatedOn, boolean isDeleted) {
-        this.projectName = projectName;
-        this.projectDescription = projectDescription;
-        this.createdBy = createdBy;
-        this.createdOn = createdOn;
-        this.updatedBy = updatedBy;
-        this.updatedOn = updatedOn;
-        this.isDeleted = isDeleted;
-    }
+	public int getProjectid() {
+		return projectid;
+	}
 
-    public String getProjectName() {
-        return projectName;
-    }
+	public void setProjectid(int projectid) {
+		this.projectid = projectid;
+	}
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
+	public String getProjectname() {
+		return projectname;
+	}
 
-    public String getProjectDescription() {
-        return projectDescription;
-    }
+	public void setProjectname(String projectname) {
+		this.projectname = projectname;
+	}
 
-    public void setProjectDescription(String projectDescription) {
-        this.projectDescription = projectDescription;
-    }
+	public String getProjectdescription() {
+		return projectdescription;
+	}
 
-    public int getCreatedBy() {
-        return createdBy;
-    }
+	public void setProjectdescription(String projectdescription) {
+		this.projectdescription = projectdescription;
+	}
 
-    public void setCreatedBy(int createdBy) {
-        this.createdBy = createdBy;
-    }
+	public int getCreatedby() {
+		return createdby;
+	}
 
-    public Date getCreatedOn() {
-        return createdOn;
-    }
+	public void setCreatedby(int createdby) {
+		this.createdby = createdby;
+	}
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
+	public Date getCreatedon() {
+		return createdon;
+	}
 
-    public int getUpdatedBy() {
-        return updatedBy;
-    }
+	public void setCreatedon(Date createdon) {
+		this.createdon = createdon;
+	}
 
-    public void setUpdatedBy(int updatedBy) {
-        this.updatedBy = updatedBy;
-    }
+	public int getUpdatedby() {
+		return updatedby;
+	}
 
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
+	public void setUpdatedby(int updatedby) {
+		this.updatedby = updatedby;
+	}
 
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
+	public Date getUpdatedon() {
+		return updatedon;
+	}
 
-    public boolean isDeleted() {
-        return isDeleted;
-    }
+	public void setUpdatedon(Date updatedon) {
+		this.updatedon = updatedon;
+	}
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
+	public boolean isIsdeleted() {
+		return isdeleted;
+	}
+
+	public void setIsdeleted(boolean isdeleted) {
+		this.isdeleted = isdeleted;
+	}
+
 }

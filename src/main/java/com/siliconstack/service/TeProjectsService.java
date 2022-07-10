@@ -25,16 +25,16 @@ public class TeProjectsService {
     }
 
     public TEProject saveTeProjects(TEProjectDTO teProjectDto) throws Exception {
-        List<TEProject> projectList = teProjectsRepository.findByProjectName(teProjectDto.getProjectName());
+        List<TEProject> projectList = teProjectsRepository.findByProjectName(teProjectDto.getProjectname());
         if (projectList.size() == 0) {
             TEProject entityProject = new TEProject();
-            entityProject.setProjectName(teProjectDto.getProjectName());
-            entityProject.setProjectDescription(teProjectDto.getProjectDescription());
-            entityProject.setCreatedBy(teProjectDto.getCreatedBy());
-            entityProject.setCreatedOn(teProjectDto.getCreatedOn());
-            entityProject.setUpdatedBy(teProjectDto.getUpdatedBy());
-            entityProject.setUpdatedOn(teProjectDto.getUpdatedOn());
-            entityProject.setDeleted(teProjectDto.isDeleted());
+            entityProject.setProjectName(teProjectDto.getProjectname());
+            entityProject.setProjectDescription(teProjectDto.getProjectdescription());
+            entityProject.setCreatedBy(teProjectDto.getCreatedby());
+            entityProject.setCreatedOn(teProjectDto.getCreatedon());
+            entityProject.setUpdatedBy(teProjectDto.getUpdatedby());
+            entityProject.setUpdatedOn(teProjectDto.getUpdatedon());
+            entityProject.setDeleted(teProjectDto.isIsdeleted());
             return teProjectsRepository.save(entityProject);
         }
         return null;
@@ -49,19 +49,18 @@ public class TeProjectsService {
                 new ResourceNotFoundException("TeProjects", "projectID", projectID));
     }
 
-    public TEProject updateProject(TEProjectDTO teProjects, int projectID) {
+    public TEProject updateProject(TEProjectDTO teProjectDto, int projectID) {
         Optional<TEProject> teProject = teProjectsRepository.findById(projectID);
         if (teProject.isPresent()) {
             TEProject entity = teProject.get();
             if (null == entity) {
                 throw new ResourceNotFoundException("TeProjects", "projectID", projectID);
             }
-
-            entity.setProjectName(teProjects.getProjectName());
-            entity.setProjectDescription(teProjects.getProjectDescription());
-            entity.setDeleted(teProjects.isDeleted());
-            entity.setUpdatedBy(teProjects.getUpdatedBy());
-            entity.setUpdatedOn(teProjects.getUpdatedOn());
+            entity.setProjectName(teProjectDto.getProjectname());
+            entity.setProjectDescription(teProjectDto.getProjectdescription());
+            entity.setUpdatedBy(teProjectDto.getUpdatedby());
+            entity.setUpdatedOn(teProjectDto.getUpdatedon());
+            entity.setDeleted(teProjectDto.isIsdeleted());
             // save existing Project to DB
             return teProjectsRepository.save(entity);
         }
