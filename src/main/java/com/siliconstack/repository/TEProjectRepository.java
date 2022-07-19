@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TEProjectRepository extends CrudRepository <TEProject, Integer >{
+public interface TEProjectRepository extends CrudRepository <TEProject, Long>{
     
     public List<TEProject> findByProjectName(String projectName);
 

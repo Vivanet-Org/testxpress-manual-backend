@@ -44,23 +44,23 @@ public class ProjectController {
 
     @PostMapping(path = "/addProject", consumes = {"application/json"})
     public ResponseEntity<TEProject> addProject(@RequestBody TEProjectDTO project) {
-        log.info("in create project method");
-        try {
-            TEProject newProject = teProjectsService.saveTeProjects(project);
-            if (newProject != null) {
-                log.info("new project created");
-                return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(newProject);
-            }
-            log.info("Project already exists");
-            return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).headers(headers).body(null);
-        } catch (Exception e) {
-            log.error("Error in addProject: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body(null);
-        }
+      log.info("in create project method");
+      try {
+          TEProject newProject = teProjectsService.saveTeProjects(project);
+          if (newProject != null) {
+              log.info("new project created");
+              return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(newProject);
+          }
+          log.info("Project already exists");
+          return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).headers(headers).body(null);
+      } catch (Exception e) {
+          log.error("Error in addProject: {} " + e.getMessage());
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body(null);
+      }
     }
-
+    
     @PutMapping("/updateProject/{id}")
-    public ResponseEntity<TEProject> updateProject(@PathVariable("id") int id, @RequestBody TEProjectDTO project) {
+    public ResponseEntity<TEProject> updateProject(@PathVariable("id") long id, @RequestBody TEProjectDTO project) {
         log.info("update existing project created");
         try {
             return new ResponseEntity<TEProject>(teProjectsService.updateProject(project, id), HttpStatus.OK);
@@ -70,14 +70,15 @@ public class ProjectController {
     }
 
     @DeleteMapping(path = "/deleteProject/{id}")
-    public ResponseEntity<String> deleteProject(@PathVariable("id") int projectID) {
+    public ResponseEntity<String> deleteProject(@PathVariable("id") long projectID) {
         log.info("delete project created");
         try {
-            // delete employee from DB
+            // delete Project from DB
             teProjectsService.deleteProject(projectID);
             return new ResponseEntity<String>("Project Deleted Successfully!.", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("Please provide a valid projectID", HttpStatus.NOT_FOUND);
         }
     }
+    
 }
