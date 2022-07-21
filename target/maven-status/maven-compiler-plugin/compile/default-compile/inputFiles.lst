@@ -1,8 +1,9 @@
-C:\work\testxpress-manual-backend\src\main\java\com\siliconstack\service\TeProjectsService.java
-C:\work\testxpress-manual-backend\src\main\java\com\siliconstack\exception\ResourceNotFoundException.java
-C:\work\testxpress-manual-backend\src\main\java\com\siliconstack\model\TEProject.java
-C:\work\testxpress-manual-backend\src\main\java\com\siliconstack\StreamLambdaHandler.java
-C:\work\testxpress-manual-backend\src\main\java\com\siliconstack\controller\PingController.java
-C:\work\testxpress-manual-backend\src\main\java\com\siliconstack\Application.java
-C:\work\testxpress-manual-backend\src\main\java\com\siliconstack\controller\ProjectController.java
-C:\work\testxpress-manual-backend\src\main\java\com\siliconstack\repository\TEProjectRepository.java
+C:\work\vivanet-org\testxpress-manual-backend\src\main\java\com\siliconstack\controller\ProjectController.java
+C:\work\vivanet-org\testxpress-manual-backend\src\main\java\com\siliconstack\Application.java
+C:\work\vivanet-org\testxpress-manual-backend\src\main\java\com\siliconstack\model\TEProject.java
+C:\work\vivanet-org\testxpress-manual-backend\src\main\java\com\siliconstack\service\TeProjectsService.java
+C:\work\vivanet-org\testxpress-manual-backend\src\main\java\com\siliconstack\StreamLambdaHandler.java
+C:\work\vivanet-org\testxpress-manual-backend\src\main\java\com\siliconstack\dto\TEProjectDTO.java
+C:\work\vivanet-org\testxpress-manual-backend\src\main\java\com\siliconstack\controller\PingController.java
+C:\work\vivanet-org\testxpress-manual-backend\src\main\java\com\siliconstack\exception\ResourceNotFoundException.java
+C:\work\vivanet-org\testxpress-manual-backend\src\main\java\com\siliconstack\repository\TEProjectRepository.java

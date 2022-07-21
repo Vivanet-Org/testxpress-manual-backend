@@ -5,4 +5,5 @@ com\siliconstack\repository\TEProjectRepository.class
 com\siliconstack\Application.class
 com\siliconstack\controller\ProjectController.class
 com\siliconstack\model\TEProject.class
+com\siliconstack\dto\TEProjectDTO.class
 com\siliconstack\controller\PingController.class
