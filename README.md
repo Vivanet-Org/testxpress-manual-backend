@@ -1,3 +1,11 @@
+## Environment setup 
+
+* Maven - 3.8.5
+* Java - 11
+* Spring boot - 2.7.1
+* Junit - 4
+* Sonar - 8.9.8
+
 # tm-app serverless API
 The tm-app project, created with [`aws-serverless-java-container`](https://github.com/awslabs/aws-serverless-java-container).
 

@@ -1,16 +1,18 @@
 package com.siliconstack.project.model;
 
-import com.siliconstack.application.model.TEApplication;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "te_projects")
-public class TEProject {
+public class TEProjects {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,12 +42,11 @@ public class TEProject {
     @CreationTimestamp
     private Date updatedOn;
 
-
-    public TEProject() {
+    public TEProjects() {
     }
 
-    public TEProject(int projectid, String projectName, String projectDescription, boolean isDeleted, int createdBy,
-                     Date createdOn, int updatedBy, Date updatedOn) {
+    public TEProjects(int projectid, String projectName, String projectDescription, boolean isDeleted, int createdBy,
+                      Date createdOn, int updatedBy, Date updatedOn) {
         super();
         this.projectid = projectid;
         this.projectName = projectName;

@@ -1,22 +1,5 @@
 package com.siliconstack.project.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.siliconstack.project.controller.ProjectController;
-import com.siliconstack.project.dto.TEProjectDTO;
-import com.siliconstack.project.model.TEProject;
-import com.siliconstack.project.service.TeProjectsService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,7 +7,31 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ProjectController.class)
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.siliconstack.applications.service.TEApplicationsService;
+import com.siliconstack.project.model.TEProjects;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.siliconstack.project.dto.TEProjectDTO;
+import com.siliconstack.project.service.TeProjectsService;
+
+@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = ProjectController.class)
 public class ProjectControllerTest {
 
     @Autowired
@@ -32,6 +39,9 @@ public class ProjectControllerTest {
 
     @MockBean
     private TeProjectsService teProjectsService;
+
+    @MockBean
+    private TEApplicationsService service;
 
     public static String asJsonString(final Object obj) {
         try {
@@ -42,7 +52,7 @@ public class ProjectControllerTest {
     }
 
     @Test
-    void testGetAllProjects_forEmptyResult() throws Exception {
+    public void testGetAllProjects_forEmptyResult() throws Exception {
         when(teProjectsService.getAllTeProjects()).thenReturn(Collections.emptyList());
 
         this.mockMvc.perform(get("/project/getAllProjects"))
@@ -50,9 +60,9 @@ public class ProjectControllerTest {
 
     }
      @Test
-     void testGetAllProjects() throws Exception {
-         List<TEProject> projectList = new ArrayList<>();
-         projectList.add(new TEProject());
+     public void testGetAllProjects() throws Exception {
+         List<TEProjects> projectList = new ArrayList<>();
+         projectList.add(new TEProjects());
 
          when(teProjectsService.getAllTeProjects()).thenReturn(projectList);
 
@@ -62,7 +72,7 @@ public class ProjectControllerTest {
      }
 
      @Test
-     void testAddProject_ifAlreadyExist() throws Exception {
+     public void testAddProject_ifAlreadyExist() throws Exception {
          when(teProjectsService.saveTeProjects(mock(TEProjectDTO.class))).thenReturn(null);
          mockMvc.perform( MockMvcRequestBuilders.post("/project/addProject")
          .contentType(MediaType.APPLICATION_JSON)
@@ -75,9 +85,9 @@ public class ProjectControllerTest {
      }
 
      @Test
-     void testAddProject_ifProjectObjectIsNull() throws Exception {
+     public void testAddProject_ifProjectObjectIsNull() throws Exception {
          TEProjectDTO project = new TEProjectDTO();
-         TEProject newProject = new TEProject(0,"Project1",null, false, 0,null,0,null);
+         TEProjects newProject = new TEProjects(0,"Project1",null, false, 0,null,0,null);
 
          when(teProjectsService.saveTeProjects(new TEProjectDTO())).thenThrow(Exception.class);
 
@@ -89,9 +99,9 @@ public class ProjectControllerTest {
      }
 
      @Test
-     void testAddProject_createProject() throws Exception {
+     public void testAddProject_createProject() throws Exception {
          TEProjectDTO project = new TEProjectDTO();
-         TEProject newProject = new TEProject(0,"Project1",null, false,0,null,0,null);
+         TEProjects newProject = new TEProjects(0,"Project1",null, false,0,null,0,null);
 
          when(teProjectsService.saveTeProjects(any())).thenReturn(newProject);
          mockMvc.perform( MockMvcRequestBuilders.post("/project/addProject")
@@ -102,9 +112,9 @@ public class ProjectControllerTest {
      }
 
      @Test
-     void testUpdateProject_successfully() throws Exception {
+     public void testUpdateProject_successfully() throws Exception {
          TEProjectDTO existingProjects = new TEProjectDTO(0,"Project1",null,0,null,0,null,false);
-         TEProject updatedProjects = new TEProject(0,"Project2","Description", false, 0,null,1,null);
+         TEProjects updatedProjects = new TEProjects(0,"Project2","Description", false, 0,null,1,null);
 
          when(teProjectsService.updateProject(existingProjects, 0)).thenReturn(updatedProjects);
 
@@ -116,8 +126,24 @@ public class ProjectControllerTest {
      }
 
      @Test
-     void testDeleteProject() throws Exception {
+     public void testDeleteProject() throws Exception {
          mockMvc.perform(MockMvcRequestBuilders.delete("/project/deleteProject/{id}", 0))
          .andExpect(status().isOk());
+     }
+
+     @Test
+    public void testGetProjectIdProjectName() throws Exception {
+         Map<Integer, String> projectNameMap = new HashMap<>();
+         projectNameMap.put(1, "TestProject1");
+         projectNameMap.put(2, "TestProject2");
+         projectNameMap.put(3, "TestProject3");
+
+         List<Map<Integer, String>> projectList = Arrays.asList(projectNameMap);
+
+         when(teProjectsService.getProjectIdAndProjectName()).thenReturn(projectList);
+
+         this.mockMvc.perform(get("/project/getProjectIdProjectName"))
+                 .andExpect(status().isOk())
+                 .andExpect(content().json("[{'1':'TestProject1','2':'TestProject2','3':'TestProject3'}]"));
      }
 }

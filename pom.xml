@@ -58,6 +58,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -169,7 +174,9 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                               
+                <sonar.source>src/main/java</sonar.source>
+                <sonar.tests>src/test/java</sonar.tests>
+                <sonar.exclusions>src/main/java/**/dto/*.java,src/main/java/**/model/*.java</sonar.exclusions>
                 <sonar.host.url>http://3.22.142.177:9000</sonar.host.url>
             </properties>
             <build>

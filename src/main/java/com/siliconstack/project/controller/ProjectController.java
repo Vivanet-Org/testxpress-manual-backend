@@ -1,19 +1,30 @@
 package com.siliconstack.project.controller;
 
-import com.siliconstack.Application;
-import com.siliconstack.project.dto.TEProjectDTO;
-import com.siliconstack.project.model.TEProject;
-import com.siliconstack.project.service.TeProjectsService;
+import javax.annotation.PostConstruct;
+
+import com.siliconstack.project.model.TEProjects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.annotation.PostConstruct;
+import com.siliconstack.Application;
+import com.siliconstack.project.dto.TEProjectDTO;
+import com.siliconstack.project.service.TeProjectsService;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @EnableWebMvc
@@ -27,32 +38,26 @@ public class ProjectController {
 
     private HttpHeaders headers;
 
-    @PostConstruct
-    private void initialize() {
-        setHeaders();
-    }
-
-    private void setHeaders() {
-        headers = new HttpHeaders();
-        headers.add("X-Requested-With", "*");
-        headers.add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, PATCH, OPTIONS");
-        headers.add("Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with");
-    }
+	@PostConstruct
+	private void initialize() {
+		headers = new HttpHeaders();
+		headers.add("X-Requested-With", "*");
+		headers.add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, PATCH, OPTIONS");
+		headers.add("Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with");
+	}
 
     @GetMapping("/getAllProjects")
-    public ResponseEntity<Iterable<TEProject>> getAllProjects() {
+    public ResponseEntity<Iterable<TEProjects>> getAllProjects() {
         log.info("In getProject method");
-        setHeaders();
-        headers.add("Access-Control-Allow-Origin", "*");
-        Iterable<TEProject> listOfProject = teProjectsService.getAllTeProjects();
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(listOfProject);
+        Iterable<TEProjects> listOfProject = teProjectsService.getAllTeProjects();
+        return ResponseEntity.status(HttpStatus.OK).body(listOfProject);
     }
 
     @PostMapping(path = "/addProject", consumes = {"application/json"})
-    public ResponseEntity<TEProject> addProject(@RequestBody TEProjectDTO project) {
+    public ResponseEntity<TEProjects> addProject(@RequestBody TEProjectDTO project) {
         log.info("in create project method");
         try {
-            TEProject newProject = teProjectsService.saveTeProjects(project);
+            TEProjects newProject = teProjectsService.saveTeProjects(project);
             if (newProject != null) {
                 log.info("new project created");
                 return ResponseEntity.status(HttpStatus.CREATED).body(newProject);
@@ -66,7 +71,7 @@ public class ProjectController {
     }
 
     @PutMapping("/updateProject/{id}")
-    public ResponseEntity<TEProject> updateProject(@PathVariable("id") int id, @RequestBody TEProjectDTO project) {
+    public ResponseEntity<TEProjects> updateProject(@PathVariable("id") int id, @RequestBody TEProjectDTO project) {
         log.info("update existing project created");
         try {
             return new ResponseEntity<>(teProjectsService.updateProject(project, id), HttpStatus.OK);
@@ -84,6 +89,17 @@ public class ProjectController {
             return new ResponseEntity<>("Project Deleted Successfully!.", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Please provide a valid projectID", HttpStatus.NOT_FOUND);
-        }
+		}
+	}
+
+    // build get projectId projectName REST API
+    @GetMapping(path="/getProjectIdProjectName")
+    public ResponseEntity<List<Map<Integer, String>>> getProjectIdProjectName(){
+        return ResponseEntity.status(HttpStatus.OK).body(teProjectsService.getProjectIdAndProjectName());
+    }
+
+    @GetMapping(path="/searchProjects/{searchStr}")
+    public ResponseEntity<List<TEProjects>> searchProjects(@PathVariable("searchStr") String searchString) {
+        return ResponseEntity.status(HttpStatus.OK).body(teProjectsService.searchProjectByNameAndDescription(searchString));
     }
 }

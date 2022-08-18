@@ -2,12 +2,13 @@ package com.siliconstack.project.service;
 
 import com.siliconstack.project.dto.TEProjectDTO;
 import com.siliconstack.project.exception.ResourceNotFoundException;
-import com.siliconstack.project.model.TEProject;
+import com.siliconstack.project.model.TEProjects;
 import com.siliconstack.project.repository.TEProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -22,10 +23,14 @@ public class TeProjectsService {
         this.teProjectsRepository = teProjectsRepository;
     }
 
-    public TEProject saveTeProjects(TEProjectDTO teProjectDto) throws Exception {
-        List<TEProject> projectList = teProjectsRepository.findByProjectName(teProjectDto.getProjectName());
+    public List<TEProjects> searchProjectByNameAndDescription(String searchString) {
+        return teProjectsRepository.searchProjectByNameAndDescription(searchString);
+    }
+
+    public TEProjects saveTeProjects(TEProjectDTO teProjectDto) throws Exception {
+        List<TEProjects> projectList = teProjectsRepository.findByProjectName(teProjectDto.getProjectName());
         if (projectList.isEmpty()) {
-            TEProject entityProject = new TEProject();
+            TEProjects entityProject = new TEProjects();
             entityProject.setProjectName(teProjectDto.getProjectName());
             entityProject.setProjectDescription(teProjectDto.getProjectDescription());
             entityProject.setCreatedBy(teProjectDto.getCreatedBy());
@@ -38,14 +43,14 @@ public class TeProjectsService {
         return null;
     }
 
-    public Iterable<TEProject> getAllTeProjects() {
+    public Iterable<TEProjects> getAllTeProjects() {
         return teProjectsRepository.findAll();
     }
 
-    public TEProject updateProject(TEProjectDTO teProjectDto, int projectID) {
-        Optional<TEProject> teProject = teProjectsRepository.findById(projectID);
+    public TEProjects updateProject(TEProjectDTO teProjectDto, int projectID) {
+        Optional<TEProjects> teProject = teProjectsRepository.findById(projectID);
         if (teProject.isPresent()) {
-            TEProject entity = teProject.get();
+            TEProjects entity = teProject.get();
             if (null == entity) {
                 throw new ResourceNotFoundException(TEPROGECTS, PROJECT_ID, projectID);
             }
@@ -62,9 +67,13 @@ public class TeProjectsService {
 
     public void deleteProject(int projectID) {
         // check whether Project with given projectID is exist in DB or not
-        Optional<TEProject> teProject = teProjectsRepository.findById(projectID);
+        Optional<TEProjects> teProject = teProjectsRepository.findById(projectID);
         if (teProject.isPresent()) {
             teProjectsRepository.deleteById(projectID);
         }
+    }
+
+    public List<Map<Integer, String>> getProjectIdAndProjectName() {
+        return teProjectsRepository.getProjectIdAndName();
     }
 }
