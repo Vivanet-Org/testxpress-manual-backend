@@ -17,7 +17,7 @@ public class TEApplications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "appid")
-    private long appid;
+    private int appid;
 
     @Column(name = "appname")
     private String appName;
@@ -54,7 +54,7 @@ public class TEApplications {
     public TEApplications() {
     }
 
-    public TEApplications(long appid, String appName, String appDescription, boolean isDeleted, int projectID, int platformID, int createdBy, Date createdOn, int updatedBy, Date updatedOn) {
+    public TEApplications(int appid, String appName, String appDescription, boolean isDeleted, int projectID, int platformID, int createdBy, Date createdOn, int updatedBy, Date updatedOn) {
         this.appid = appid;
         this.appName = appName;
         this.appDescription = appDescription;
@@ -67,11 +67,11 @@ public class TEApplications {
         this.updatedOn = updatedOn;
     }
 
-    public long getAppid() {
+    public int getAppid() {
         return appid;
     }
 
-    public void setAppid(long appid) {
+    public void setAppid(int appid) {
         this.appid = appid;
     }
 
